@@ -40,7 +40,19 @@ python visualize.py
 
 # Generate choropleth maps (downloads Census shapefile on first run)
 python choropleth.py
+
+# Export GeoPackage + QGIS layer styles for interactive exploration
+python export_qgis.py          # export only
+python export_qgis.py --open   # export and launch QGIS
 ```
+
+**Opening in QGIS:**
+1. Run `python export_qgis.py`
+2. Open QGIS → Layer > Add Layer > Add Vector Layer → `output/housing_justice.gpkg`
+3. Layer > Load Layer Style → select a `.qml` file from `output/`:
+   - `style_rent_burden.qml` — severe rent burden by county
+   - `style_jail_rate.qml` — jail population rate
+   - `style_racial_disparity.qml` — Black/white disparity ratio
 
 Output written to `output/` (gitignored):
 
@@ -95,10 +107,11 @@ Four checks run before any output is written:
 
 ```
 housing-justice-pipeline/
-├── pipeline.py       # Extract → Transform → Load
-├── validate.py       # Cross-source validation checks
-├── visualize.py      # Static charts (scatter, bar, clustering)
-├── choropleth.py     # GeoPandas choropleth maps (county-level)
+├── pipeline.py        # Extract → Transform → Load
+├── validate.py        # Cross-source validation checks
+├── visualize.py       # Static charts (scatter, bar, clustering)
+├── choropleth.py      # GeoPandas choropleth maps (county-level)
+├── export_qgis.py     # GeoPackage + QML style export for QGIS
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
