@@ -32,7 +32,14 @@ Get a free Census API key (instant): https://api.census.gov/data/key_signup.html
 ## Usage
 
 ```bash
+# Run the full data pipeline (requires Census API key in .env)
 python pipeline.py
+
+# Generate static charts (scatter plots, bar charts, clustering)
+python visualize.py
+
+# Generate choropleth maps (downloads Census shapefile on first run)
+python choropleth.py
 ```
 
 Output written to `output/` (gitignored):
@@ -40,7 +47,20 @@ Output written to `output/` (gitignored):
 ```
 output/
 ├── housing_justice_county.csv    # ~3,100 county rows
-└── validation_report.txt         # cross-source validation summary
+├── validation_report.txt         # cross-source validation summary
+└── figures/
+    ├── 01_scatter_burden_vs_jail.png
+    ├── 02_top20_severe_rent_burden.png
+    ├── 03_top20_jail_rate.png
+    ├── 04_racial_disparity_ratio.png
+    ├── 05_dual_burden_counties.png
+    ├── 06_correlation_heatmap.png
+    ├── 07_mental_health_vs_jail.png
+    ├── 08_county_clusters.png
+    ├── 09_choropleth_rent_burden.png       # GeoPandas choropleth
+    ├── 10_choropleth_jail_rate.png         # GeoPandas choropleth
+    ├── 11_choropleth_racial_disparity.png  # GeoPandas choropleth
+    └── 12_choropleth_dual_burden.png       # GeoPandas choropleth
 ```
 
 ## Output Schema
@@ -77,6 +97,8 @@ Four checks run before any output is written:
 housing-justice-pipeline/
 ├── pipeline.py       # Extract → Transform → Load
 ├── validate.py       # Cross-source validation checks
+├── visualize.py      # Static charts (scatter, bar, clustering)
+├── choropleth.py     # GeoPandas choropleth maps (county-level)
 ├── requirements.txt
 ├── .env.example
 ├── .gitignore
